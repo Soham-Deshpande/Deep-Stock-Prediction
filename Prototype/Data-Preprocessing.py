@@ -12,6 +12,7 @@
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class CSVHandler:
@@ -52,7 +53,25 @@ class Normalise:
         self.data = rdatasplit
         self.norm = np.linalg.norm(rdatasplit)
         self.normalised = rdatasplit / self.norm
+        return self.normalised#.tolist()
+
+    def batchnormforward(self, gamma, beta, eps=1e-5):
+        N, D = self.shape
+
+        sample_mean = self.mean(axis=0)
+        sample_var = self.var(axis=0)
+
+        std = np.sqrt(sample_var + eps)
+        x_centered = self - sample_mean
+        x_norm = x_centered / std
+        out = gamma * x_norm + beta
+
+        cache = (x_norm, x_centered, std, gamma)
+
+        return out, cache
+
         return self.normalised.tolist()
+
 
 
 def normalisedata(columnnames):
@@ -62,5 +81,24 @@ def normalisedata(columnnames):
     return ndata
 
 
+def data_preprocess_complete():
+    ColumnNames = ['Open','High', 'Low', 'Close', 'Volume']
+    test = normalisedata(ColumnNames)
+    #print(ColumnNames)
+    #print(test)
+    df = pd.DataFrame(test, ColumnNames)
+    #print(df)
+    df = df.transpose()
+    print(df.describe())
+    return df
+    #print(df)
+    #df.plot(y='Open', kind='line')
+    #plt.show()
+
+data_preprocess_complete()
+
+
+
 ColumnNames = ['Open', 'Open', 'High', 'Low', 'Close']
 print(normalisedata(ColumnNames))
+
