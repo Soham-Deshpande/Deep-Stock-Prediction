@@ -70,6 +70,8 @@ class Normalise:
 
         return out, cache
 
+        return self.normalised.tolist()
+
 
 
 def normalisedata(columnnames):
@@ -96,4 +98,7 @@ def data_preprocess_complete():
 data_preprocess_complete()
 
 
+
+ColumnNames = ['Open', 'Open', 'High', 'Low', 'Close']
+print(normalisedata(ColumnNames))
 
