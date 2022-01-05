@@ -75,7 +75,7 @@ class Normalise:
 
 
 def normalisedata(columnnames):
-    rdata = splitcolumns(r'C:\Users\soham\PycharmProjects\NEA\Data\Testing-Data.csv', 0, columnnames)
+    rdata = splitcolumns('/home/soham/Documents/PycharmProjects/NEA/Data/Testing-Data.csv', 0, columnnames)
     normal = Normalise()  # rawdata
     ndata = normal.normalise(rdata)  # normalised data
     return ndata
@@ -90,10 +90,11 @@ def data_preprocess_complete():
     #print(df)
     df = df.transpose()
     print(df.describe())
+    df.plot(y='Open', kind='line')
+    plt.show()
     return df
     #print(df)
-    #df.plot(y='Open', kind='line')
-    #plt.show()
+
 
 data_preprocess_complete()
 
